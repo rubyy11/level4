@@ -1,12 +1,35 @@
 const todoList = require('../todo');
-const {all , markAsComplete , add } = todoList();
+
+
+const {all , markAsComplete , add,overdue, dueToday, dueLater } = todoList();
 describe("Todolist Test Suite", () => {
     beforeAll(() => {
         add(
             {
-                title: "Test todo",
+                title: "finish homework",
                 completed: false,
                 dueDate: new Date().toLocaleDateString("en-CA")
+            }
+        );
+        add(
+            {
+                title: "practice ",
+                completed: false,
+                dueDate: new Date(new Date().setDate(new Date().getDate() - 3)).toLocaleDateString("en-CA")
+            }
+        );
+        add(
+            {
+                title: "running",
+                completed: false,
+                dueDate: new Date(new Date().setDate(new Date().getDate() + 3)).toLocaleDateString("en-CA")
+            }
+        );
+        add(
+            {
+                title: "sleeping",
+                completed: false,
+                dueDate: new Date(new Date().setDate(new Date().getDate() + 11)).toLocaleDateString("en-CA")
             }
         );
     })
@@ -26,4 +49,34 @@ describe("Todolist Test Suite", () => {
         markAsComplete(0);
         expect(all[0].completed).toBe(true);
     })
+    test("Should check retrieval of overdue items",()=>{
+        let x=overdue().length
+        let i=0
+        todaysDate=new Date().toLocaleDateString("en-CA")
+        while(i<x){
+            expect(overdue()[i].dueDate<todaysDate).toBe(true);
+            i++;
+
+        }
+    })
+    test("Should checks retrieval of due today items",()=>{
+        let x=dueToday().length
+        let i=0
+        todaysDate=new Date().toLocaleDateString("en-CA")
+        while(i<x){
+            expect(dueToday()[i].dueDate===todaysDate).toBe(true);
+            i++;
+        }
+        
+    })
+    test("Should checks retrieval of due later items",()=>{
+        let x=dueLater().length
+        let i=0
+        todaysDate=new Date().toLocaleDateString("en-CA")
+        while(i<x){
+            expect(dueLater()[i].dueDate>todaysDate).toBe(true);
+            i++;
+        }
+    })
+
 })
