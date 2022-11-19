@@ -6,44 +6,30 @@ describe("Todolist Test Suite", () => {
     beforeAll(() => {
         add(
             {
-                title: "1",
+                title: "finish homework",
                 completed: false,
                 dueDate: new Date().toLocaleDateString("en-CA")
             }
         );
         add(
             {
-                title: "2 ",
+                title: "practice ",
                 completed: false,
-                dueDate: new Date(new Date().setDate(new Date().getDate())).toLocaleDateString("en-CA")
+                dueDate: new Date(new Date().setDate(new Date().getDate() - 3)).toLocaleDateString("en-CA")
             }
         );
         add(
             {
-                title: "3",
+                title: "running",
                 completed: false,
-                dueDate: new Date(new Date().setDate(new Date().getDate() + 1)).toLocaleDateString("en-CA")
+                dueDate: new Date(new Date().setDate(new Date().getDate() + 3)).toLocaleDateString("en-CA")
             }
         );
         add(
             {
-                title: "4",
+                title: "sleeping",
                 completed: false,
-                dueDate: new Date(new Date().setDate(new Date().getDate() -2)).toLocaleDateString("en-CA")
-            }
-        );
-        add(
-            {
-                title: "4",
-                completed: false,
-                dueDate: new Date(new Date().setDate(new Date().getDate() + 2)).toLocaleDateString("en-CA")
-            }
-        );
-        add(
-            {
-                title: "4",
-                completed: false,
-                dueDate: new Date(new Date().setDate(new Date().getDate() -1)).toLocaleDateString("en-CA")
+                dueDate: new Date(new Date().setDate(new Date().getDate() + 11)).toLocaleDateString("en-CA")
             }
         );
     })
@@ -65,36 +51,32 @@ describe("Todolist Test Suite", () => {
     })
     test("Should check retrieval of overdue items",()=>{
         let x=overdue().length
-        var i=0;
-        present=new Date().toLocaleDateString("en-CA")
-        for(i in x){
-            y=dueToday()[i].dueDate<present
-            expect(y).toBe(true);
+        let i=0
+        todaysDate=new Date().toLocaleDateString("en-CA")
+        while(i<x){
+            expect(overdue()[i].dueDate<todaysDate).toBe(true);
+            i++;
 
         }
-
-        }
-    )
+    })
     test("Should checks retrieval of due today items",()=>{
         let x=dueToday().length
-        var i=0;
-        present=new Date().toLocaleDateString("en-CA")
-        for(i in x){
-            y=dueToday()[i].dueDate===present
-            expect(y).toBe(true);
+        //happy coding
+        let i=0
+        todaysDate=new Date().toLocaleDateString("en-CA")
+        while(i<x){
+            expect(dueToday()[i].dueDate===todaysDate).toBe(true);
+            i++;
         }
         
     })
-
-
-
     test("Should checks retrieval of due later items",()=>{
         let x=dueLater().length
-        var i=0;
-        present=new Date().toLocaleDateString("en-CA")
-        for(i in x){
-            y=dueLater()[i].dueDate>present
-            expect(y).toBe(true);
+        let i=0
+        todaysDate=new Date().toLocaleDateString("en-CA")
+        while(i<x){
+            expect(dueLater()[i].dueDate>todaysDate).toBe(true);
+            i++;
         }
     })
 
